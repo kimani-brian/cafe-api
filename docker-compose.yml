@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: cafe_db
+    environment:
+      POSTGRES_USER: cafe_admin
+      POSTGRES_PASSWORD: supersecretpassword
+      POSTGRES_DB: cafe_pos
+    ports:
+      - "5437:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      # This line automatically runs our init.sql file when the DB is created
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+
+volumes:
+  postgres_data:
